@@ -69,7 +69,7 @@ print(historic_weather.temperature)
 - `GET /v1/history?latitude={lat}&longitude={lon}&start_date={start}&end_date={end}&temperature_unit=celsius` -->
 
 ## License
-This project is licensed under the MIT License. See `LICENSE` for more details.
+This project is licensed under the MIT License. See [`LICENSE`](./LICENSE) for more details.
 
 ## Contributing
 Contributions are welcome! Feel free to submit a pull request or open an issue to improve the module.
