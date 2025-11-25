@@ -1,6 +1,6 @@
 [project]
 name = "openmeteo-example"
-version = "0.3.4"
+version = "0.3.5"
 description = "An example project that allows for easy interfacing with OpenMeteo API - https://open-meteo.com/"
 readme = "README.md"
 authors = [
