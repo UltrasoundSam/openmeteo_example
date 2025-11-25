@@ -62,8 +62,8 @@ class OpenMeteo(ABC):
         return self.__longitude
 
     @property
-    def temperature(self) -> Optional[[list[dt.datetime],
-                                       list[float]]]:
+    def temperature(self) -> Optional[tuple[list[dt.datetime],
+                                            list[float]]]:
         '''Returns temperature data (if any)
         '''
         return self._return_data('Temperature')
