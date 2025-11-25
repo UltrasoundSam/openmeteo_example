@@ -1,0 +1,1 @@
+from .historic import MeteoHistorical  # noqa: F401
