@@ -1,6 +1,6 @@
 [project]
 name = "openmeteo-example"
-version = "0.3.0"
+version = "0.3.2"
 description = "An example project that allows for easy interfacing with OpenMeteo API - https://open-meteo.com/"
 readme = "README.md"
 authors = [
@@ -27,3 +27,4 @@ dev = [
 
 [tool.pytest.ini_options]
 pythonpath = "src"
+addopts = "--cov=src"
