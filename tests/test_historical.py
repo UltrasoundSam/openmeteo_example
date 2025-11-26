@@ -9,15 +9,13 @@ INVALID_LONGITUDE = (-60, 270)
 
 
 def test_instantiation():
-    '''Tests that object can be correctly instantiated'''
+    """Tests that object can be correctly instantiated"""
 
     test = MeteoHistorical(*VALID_LOCATION)
     assert isinstance(test, MeteoHistorical)
 
 
-@pytest.mark.parametrize("location",
-                         [INVALID_LATITUDE,
-                          INVALID_LONGITUDE])
+@pytest.mark.parametrize("location", [INVALID_LATITUDE, INVALID_LONGITUDE])
 def test_invalid_position(location):
     with pytest.raises(ValueError):
         _ = MeteoHistorical(*location)

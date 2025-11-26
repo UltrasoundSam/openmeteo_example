@@ -26,8 +26,10 @@ jobs:
     - name: Install the project
       run: uv sync --locked --all-extras --dev
 
-    - name: Lint with flake8
-      run: uv run ruff check
+    - name: Lint with ruff
+      run:  |
+        uv run ruff check --fix
+        uv run ruff format
 
     - name: Test with pytest
       run: uv run pytest
