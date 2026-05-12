@@ -10,7 +10,7 @@ with historic data from OpenMeteo
 
 import datetime as dt
 from typing import Optional
-from .openmeteo import OpenMeteo
+from .openmeteo import OpenMeteo, MeasType
 
 
 class MeteoHistorical(OpenMeteo):
@@ -21,10 +21,7 @@ class MeteoHistorical(OpenMeteo):
         self,
         start_date: Optional[dt.datetime] = None,
         end_date: Optional[dt.datetime] = None,
-        temperature: bool = True,
-        wind_speed: bool = True,
-        cloud_cover: bool = True,
-        precipitation: bool = True,
+        measurements: MeasType = MeasType(15),
     ):
         """Refine get data method for historical data"""
         if start_date is None:
@@ -35,8 +32,5 @@ class MeteoHistorical(OpenMeteo):
         super().get_data(
             start_date=start_date,
             end_date=end_date,
-            temperature=temperature,
-            wind_speed=wind_speed,
-            cloud_cover=cloud_cover,
-            precipitation=precipitation,
+            measurements=measurements,
         )

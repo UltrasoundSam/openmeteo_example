@@ -14,6 +14,14 @@ import requests
 from typing import Optional
 from collections import defaultdict
 from abc import ABC
+from enum import Flag, auto
+
+
+class MeasType(Flag):
+    TEMPERATURE = auto()
+    CLOUD = auto()
+    PRECIPITATION = auto()
+    WIND = auto()
 
 
 class OpenMeteo(ABC):
@@ -22,10 +30,10 @@ class OpenMeteo(ABC):
 
     # Useful look-up for API terms
     _measures = {
-        "Temperature": "temperature_2m",
-        "Cloud Cover": "cloud_cover",
-        "Precipitation": "precipitation",
-        "Wind Speed": "wind_speed_10m",
+        MeasType.TEMPERATURE: "temperature_2m",
+        MeasType.CLOUD: "cloud_cover",
+        MeasType.PRECIPITATION: "precipitation",
+        MeasType.WIND: "wind_speed_10m",
     }
 
     def __init__(self, latitude: float, longitude: float) -> None:
@@ -65,31 +73,28 @@ class OpenMeteo(ABC):
     @property
     def temperature(self) -> Optional[tuple[list[dt.datetime], list[float]]]:
         """Returns temperature data (if any)"""
-        return self._return_data("Temperature")
+        return self._return_data(MeasType.TEMPERATURE)
 
     @property
     def wind(self) -> Optional[tuple[list[dt.datetime], list[float]]]:
         """Returns wind data (if any)"""
-        return self._return_data("Wind Speed")
+        return self._return_data(MeasType.WIND)
 
     @property
-    def cloud(self) -> Optional[tuple[list[dt.datetime], list[int]]]:
+    def cloud(self) -> Optional[tuple[list[dt.datetime], list[float]]]:
         """Returns cloud data (if any)"""
-        return self._return_data("Cloud Cover")
+        return self._return_data(MeasType.CLOUD)
 
     @property
     def precipitation(self) -> Optional[tuple[list[dt.datetime], list[float]]]:
         """Returns cloud data (if any)"""
-        return self._return_data("Precipitation")
+        return self._return_data(MeasType.PRECIPITATION)
 
     def get_data(
         self,
         start_date: Optional[dt.datetime] = None,
         end_date: Optional[dt.datetime] = None,
-        temperature: bool = True,
-        wind_speed: bool = True,
-        cloud_cover: bool = True,
-        precipitation: bool = True,
+        measurements: MeasType = MeasType(15),
     ) -> None:
         """Get multiple hourly measurements from forecast, up to 16 days in
         advance
@@ -97,14 +102,9 @@ class OpenMeteo(ABC):
 
         # Get all measurements
         meas = []
-        if temperature:
-            meas.append(self._measures["Temperature"])
-        if wind_speed:
-            meas.append(self._measures["Wind Speed"])
-        if cloud_cover:
-            meas.append(self._measures["Cloud Cover"])
-        if precipitation:
-            meas.append(self._measures["Precipitation"])
+
+        for measurement in measurements:
+            meas.append(self._measures[measurement])
 
         meas = ",".join(meas)
 
@@ -136,7 +136,7 @@ class OpenMeteo(ABC):
             except KeyError:
                 continue
 
-    def _return_data(self, key: str) -> Optional[tuple[list[dt.datetime], list[float]]]:
+    def _return_data(self, key: MeasType) -> Optional[tuple[list[dt.datetime], list[float]]]:
         """Useful help function for getting data from data
         dictionary without having to repeat code"""
         try:

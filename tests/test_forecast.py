@@ -29,7 +29,7 @@ def test_invalid_position(location: tuple[float, float]):
 
 @pytest.mark.parametrize(
     "parameter, param_type",
-    [("temperature", float), ("wind", float), ("cloud", int), ("precipitation", float)],
+    [("temperature", float), ("wind", float), ("cloud", float), ("precipitation", float)],
 )
 def test_properties(valid_object, parameter, param_type):
     """Test that we can get parameters and that they are

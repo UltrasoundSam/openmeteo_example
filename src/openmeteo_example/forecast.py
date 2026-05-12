@@ -12,7 +12,7 @@ import datetime as dt
 import requests
 from typing import Optional
 
-from .openmeteo import OpenMeteo
+from .openmeteo import OpenMeteo, MeasType
 
 
 class MeteoForecast(OpenMeteo):
@@ -62,7 +62,7 @@ class MeteoForecast(OpenMeteo):
         return data
 
     def _parse_current_measurement(
-        self, data_name: str, json_payload: dict, date: dt.datetime
+        self, data_name: MeasType, json_payload: dict, date: dt.datetime
     ) -> None:
         """Parses json object data and puts it into object data
         storage
@@ -85,10 +85,7 @@ class MeteoForecast(OpenMeteo):
     def get_data(
         self,
         end_date: Optional[dt.datetime] = None,
-        temperature: bool = True,
-        wind_speed: bool = True,
-        cloud_cover: bool = True,
-        precipitation: bool = True,
+        measurements: MeasType = MeasType(15),
     ):
         """Refining get data method for forecast API"""
 
@@ -100,8 +97,5 @@ class MeteoForecast(OpenMeteo):
         super().get_data(
             start_date=start_date,
             end_date=end_date,
-            temperature=temperature,
-            wind_speed=wind_speed,
-            cloud_cover=cloud_cover,
-            precipitation=precipitation,
+            measurements=measurements,
         )
