@@ -81,7 +81,7 @@ class OpenMeteo(ABC):
         return self._return_data(MeasType.WIND)
 
     @property
-    def cloud(self) -> Optional[tuple[list[dt.datetime], list[float]]]:
+    def cloud(self) -> Optional[tuple[list[dt.datetime], list[int]]]:
         """Returns cloud data (if any)"""
         return self._return_data(MeasType.CLOUD)
 
